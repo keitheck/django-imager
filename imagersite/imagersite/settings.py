@@ -23,6 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = os.environ.get('DEBUG', False)
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'imagersite',
+    'imager_profile',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +84,7 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASSWORD', ''),
         'HOST': os.environ.get('DB_HOST', ''),
         'PORT': 5432,
-        'TEST': {'NAME': 'imager_site_test'}
+        'TEST': {'NAME': 'imager_site_test'},
     }
 }
 
