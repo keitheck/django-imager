@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="welcome">
+  <p>Welcome to ImageSite!</p>
+  <img src="{% static "images/banner.jpg" %}" class="banner-image">
+  <p>Using ImageSite, you can share lovely photos like the one above!</p>
+  <p>You can also:</p>
+  <ul>
+    <li>Browse photos!</li>
+    <li>Possibly download photos!</li>
+    <li>Share with friends!</li>
+    <li>Be cool like us.</li>
+  </ul>
+</section>
+{% endblock %}
