@@ -1,0 +1,51 @@
+header li {
+  display: inline-block;
+  width: 100px;
+}
+
+.banner-image {
+  width: 100%;
+}
+
+.welcome {
+  text-align: center;
+}
+
+.welcome h1, h2 {
+  color: #8F0109;
+}
+
+.welcome h1 {
+  font-family: 'Monoton';
+  font-size: 48px;
+}
+
+.welcome h2 {
+  font-family: 'Gamja Flower';
+  font-size: 36px;
+}
+
+.helptext {
+  display: none;
+}
+
+.registration-form, .login-form {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.registration-form input, .login-form input {
+  display: block;
+  margin: 20px auto;
+}
+
+.registration-form ul {
+  display: none;
+}
+
+.registration-form h2, .login-form h2 {
+  margin: 50px;
+  font-family: 'Monoton';
+  font-size: 36px;
+  color: #8F0109;
+}
