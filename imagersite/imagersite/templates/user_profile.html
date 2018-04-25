@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="user-profile">
+  <p>Welcome back, {{user.username}}</p>
+  <img src="{% static "images/banner.jpg" %}" class="banner-image">
+</section>
+{% endblock %}

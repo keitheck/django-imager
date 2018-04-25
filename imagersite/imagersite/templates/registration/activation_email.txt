@@ -1,0 +1,5 @@
+Thank you for signing up, {{ user.username }}.
+
+To activate your account on ImagerSite, please visit the link below:
+
+http://{{site}}{% url "registration_activate" activation_key=activation_key %}

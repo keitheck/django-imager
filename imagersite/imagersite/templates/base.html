@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{title}}</title>
+  <link rel=stylesheet href={% static "styles/reset.css" %}>
+  <link rel=stylesheet href={% static "styles/base.css" %}>
+  <link rel=stylesheet href={% static "styles/layout.css" %}>
+  <link rel=stylesheet href={% static "styles/modules.css" %}>
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Gamja+Flower|Monoton|Montserrat|Slabo+27px" rel="stylesheet">
+
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        {% if user.is_authenticated %}
+        <li><a href="{% url "user_profile" %}">{{user.username}}</a></li>
+        <li><a href="{% url "auth_logout" %}">Logout</a></li>
+        {% else %}
+        <li><a href="{% url "registration_register" %}">Signup</a></li>
+        <li><a href="{% url "auth_login" %}">Signin</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+  <main>
+    {% block content %}
+    <h3>No Content</h3>
+    {% endblock content%}
+  </main>
+  <footer>
+
+  </footer>
+
+</body>
+</html>
