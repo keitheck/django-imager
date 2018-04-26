@@ -1,6 +1,8 @@
 # imagersite
 
-**Authors**: David Snowberger, Keith Eckhert
+**Authors**: 
+- Keith Eckert [Git Hub](https://github.com/keitheck) | [Linkedin](www.linkedin.com/in/keith-eckert)
+- David Snowberger [Git Hub](https://github.com/dsnowb) | [Linkedin](www.linkedin.com/in/dsnowberger)
 
 **Version**: 0.1.0
 
@@ -8,7 +10,57 @@
 An image bucket app.
 
 ## Architecture
-This app is written using Python 3.6, Django, and Postgres.
+This app is written using Python 3.6, Django, and Postgres, HTML, CSS
+
+## Installation
+
+1. Clone https://github.com/keitheck/django-imager
+
+2. pip install -r requirments.txt
+
+3. create postgres db
+
+4. set up local environmental variables in your environment
+
+```
+# Project-specific env variables
+export SECRET_KEY='<your secret key>'
+export DB_NAME='<db name>'
+export DB_USER=''
+export DB_PASSWORD=''
+export DB_HOST='localhost'
+```
+
+5. In project directory run:
+
+`./manage.py runserver` The server should now be running on localhost:8000
+
+## Routes
+
+### /admin/
+
+- admin login page
+
+### /
+
+- home page
+
+### /profile/
+
+- user profile page
+
+### /accounts/
+
+- user authentication and registration
+
 
 ## Change Log
-- 23 April 2018 - Repo Created, initial setup, profile model configured.
+| Date | |
+|:--|:--|
+| 23 April 2018 | Repo Created, initial setup, profile model configured. Tested |
+| 24 April 2018 | Configured Authentication, CSS, Tested |
+| 25 April 2018 | Configured Album and Photo models. Tested |
+
+## Resources
+- django\
+- Amazon AWS
