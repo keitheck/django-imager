@@ -39,6 +39,7 @@ class ProfileUnitTests(TestCase):
 
             profile = ProfileFactory.create(user=user)
             profile.save()
+        cls.user_id = user.id
 
     @classmethod
     def tearDownClass(cls):
@@ -48,7 +49,7 @@ class ProfileUnitTests(TestCase):
 
     def test_user_can_see_profile(self):
         '''Test user has profile property.'''
-        one_user = User.objects.first()
+        one_user = User.objects.get(pk=self.user_id)
         self.assertIsNotNone(one_user.profile)
 
     def test_delete_user_deletes_profile(self):
