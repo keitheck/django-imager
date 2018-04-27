@@ -2,6 +2,7 @@
 
 {% block content %}
 {% if user.username == profile.user.username %}
+<a href="{% url "library" %}">{{user.username}}'s Library</a>
 {% endif %}
 <p>{{user.username}}'s album count: {{profile.user.albums.count}}</p>
 <p>{{user.username}}'s public album count: {{public_albums.count}}</p>
@@ -11,5 +12,4 @@
 <p>{{user.username}}'s public photo count: {{public_photos.count}}</p>
 <p>{{user.username}}'s shared photo count: {{shared_photos.count}}</p>
 <p>{{user.username}}'s private photo count: {{private_photos.count}}</p>
-<a href="{% url "library" username=user.username %}">{{user.username}}'s Library</a>
 {% endblock %}

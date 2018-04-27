@@ -33,20 +33,3 @@ def profile_view(request, username=None):
     return render(request, 'imager_profile/profile.html', context)
 
 
-def library_view(request, username=None):
-    owner = False
-    if not username:
-        username = request.user.get_username()
-        owner = True
-        if username == '':
-            return redirect('auth_login')
-
-    albums = Album.objects.all().filter(user__username=username)
-
-    if not owner:
-        albums = albums.all().filter(published='PUBLIC')
-
-    context = {
-        'albums': albums,
-    }
-    return render(request, 'imager_profile/library.html', context)

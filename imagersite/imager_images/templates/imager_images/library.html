@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block content %}
+<p>{{albums.first.user.username}}'s Albums:</p>
+{% for album in albums.all %}
+<p>{{album.title}}<p>
+<p>{{album.description}}</p>
+<p>{{album.date_created}}</p>
+{% for image in album.photos.all %}
+{% thumbnail image.image "100x100" crop="center" as im %}
+<a href="{% url "photo" photo_id=image.id %}"><img src="{{ im.url }}"></a>
+{% endthumbnail %}
+{% endfor %}
+{% endfor %}
+{% endblock %}
