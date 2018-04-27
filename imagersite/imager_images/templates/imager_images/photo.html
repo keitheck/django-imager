@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-{% if photo %}
+{% if photo.image %}
 <img src="{{ photo.image.url }}">
 {% endif %}
 {% endblock %}

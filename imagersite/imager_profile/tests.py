@@ -38,8 +38,7 @@ class ProfileUnitTests(TestCase):
             user.set_password(factory.Faker('password'))
             user.save()
 
-            profile = ProfileFactory.create(user=user)
-            profile.save()
+            ProfileFactory.create(user=user)
         cls.user_id = user.id
 
     @classmethod
@@ -72,5 +71,8 @@ class ProfileUnitTests(TestCase):
 
     def test_profile(self):
         """testing that profile path renders successful"""
-        response = self.client.get(reverse_lazy('user_profile'))
-        self.assertTrue(response.status_code == 200)        
+        user = User.objects.first()
+        ProfileFactory.create(user=user)
+        response = self.client.get(
+            reverse_lazy('named_profile', args=[user.username]))
+        self.assertTrue(response.status_code == 200)
