@@ -18,7 +18,7 @@
     <nav>
       <ul>
         {% if user.is_authenticated %}
-        <li><a href="{% url "user_profile" %}">{{user.username}}</a></li>
+        <li><a href="{% url "profile" %}">{{user.username}}</a></li>
         <li><a href="{% url "auth_logout" %}">Logout</a></li>
         {% else %}
         <li><a href="{% url "registration_register" %}">Signup</a></li>

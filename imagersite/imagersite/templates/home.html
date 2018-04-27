@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
+{% load thumbnail %}
 {% block content %}
 <section class="welcome">
   <h1>Welcome to ImagerSite!</h1>
-  <img src="{% static "images/banner.png" %}" class="banner-image">
+  {% if banner %}
+    {% comment %} {% thumbnail banner.image as im %} {% endcomment %}
+    <img src="{{ banner.image.url }}" class="banner-image">
+    {% comment %} {% endthumbnail %} {% endcomment %}
+  {% else %}
+    <img src="{% static "images/banner.png" %}" class="banner-image">
+
+  {% endif %}
   <h2>Browse. Share. Click. Consume.</h2>
 </section>
 {% endblock %}

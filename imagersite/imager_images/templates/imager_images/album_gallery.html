@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block content %}
+<p>{{gallery.first.user.username}}'s Albums:</p>
+{% for album in gallery.all %}
+
+{% thumbnail album.cover.image "100x100" crop="center" as im %}
+<a href="{% url "album" album_id=album.id %}"><img src="{{ im.url }}"></a>
+{% endthumbnail %}
+{% endfor %}
+{% endblock %}
