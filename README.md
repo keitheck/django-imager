@@ -53,6 +53,25 @@ export DB_HOST='localhost'
 
 - user authentication and registration
 
+### /images/photos
+
+- gallery of all uploaded public photos
+
+### /images/photos/<photo_id>
+
+- individual photo
+
+### /images/albums
+
+- gallery of all uploaded public albums
+
+### /images/albums/<album_id>
+
+- individual album
+
+### /images/library
+
+- user's personal library
 
 ## Change Log
 | Date | |
@@ -60,7 +79,8 @@ export DB_HOST='localhost'
 | 23 April 2018 | Repo Created, initial setup, profile model configured. Tested |
 | 24 April 2018 | Configured Authentication, CSS, Tested |
 | 25 April 2018 | Configured Album and Photo models. Tested |
+| 26 April 2018 | Added library, photo and album routes. Tested |
 
 ## Resources
-- django\
+- Django
 - Amazon AWS
