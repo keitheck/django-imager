@@ -4,12 +4,14 @@
 {% if user.username == profile.user.username %}
 <a href="{% url "library" %}">{{user.username}}'s Library</a>
 {% endif %}
-<p>{{user.username}}'s album count: {{profile.user.albums.count}}</p>
-<p>{{user.username}}'s public album count: {{public_albums.count}}</p>
-<p>{{user.username}}'s shared album count: {{shared_albums.count}}</p>
-<p>{{user.username}}'s private album count: {{private_albums.count}}</p>
-<p>{{user.username}}'s photo count: {{profile.user.photos.count}}</p>
-<p>{{user.username}}'s public photo count: {{public_photos.count}}</p>
-<p>{{user.username}}'s shared photo count: {{shared_photos.count}}</p>
-<p>{{user.username}}'s private photo count: {{private_photos.count}}</p>
+<h2>Album Information</h2>
+<p>{{profile.user.username}}'s album count: {{profile.user.albums.count}}</p>
+<p>{{profile.user.username}}'s public album count: {{public_albums.count}}</p>
+<p>{{profile.user.username}}'s shared album count: {{shared_albums.count}}</p>
+<p>{{profile.user.username}}'s private album count: {{private_albums.count}}</p>
+<h2>Photo Information</h2>
+<p>{{profile.user.username}}'s photo count: {{profile.user.photos.count}}</p>
+<p>{{profile.user.username}}'s public photo count: {{public_photos.count}}</p>
+<p>{{profile.user.username}}'s shared photo count: {{shared_photos.count}}</p>
+<p>{{profile.user.username}}'s private photo count: {{private_photos.count}}</p>
 {% endblock %}

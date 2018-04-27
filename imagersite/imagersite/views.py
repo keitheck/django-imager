@@ -10,7 +10,7 @@ def home_view(request):
     }
 
     if Photo.objects.all().count():
-        context['banner'] = Photo.objects.order_by('?').first()
+        context['banner'] = Photo.objects.filter(published='PUBLIC').order_by('?').first()
 
     return render(request, 'home.html', context)
 

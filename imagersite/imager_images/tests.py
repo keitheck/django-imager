@@ -111,6 +111,7 @@ class ViewTests(TestCase):
         """Validate photo view exists and renders."""
         photo = Photo.objects.all().first()
         photo.user = User.objects.all().first()
+        photo.published = 'PUBLIC'
         photo.save()
         response = self.client.get(reverse('photo', args=[photo.id]))
         self.assertEqual(response.status_code, 200)

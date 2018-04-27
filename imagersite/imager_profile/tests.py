@@ -1,6 +1,7 @@
 from django.test import TestCase
 from .models import ImagerProfile, User
 import factory
+from django.urls import reverse_lazy
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -68,3 +69,8 @@ class ProfileUnitTests(TestCase):
         profile.is_active = False
         profile.save()
         self.assertFalse(profile in ImagerProfile.active())
+
+    def test_profile(self):
+        """testing that profile path renders successful"""
+        response = self.client.get(reverse_lazy('user_profile'))
+        self.assertTrue(response.status_code == 200)        

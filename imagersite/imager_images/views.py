@@ -1,11 +1,19 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Album, Photo
+from django.http import Http404
+from django.contrib.auth.models import User
 
 
 def photo_view(request, photo_id):
     photo = Photo.objects.filter(id=photo_id).first()
+    # import pdb ; pdb.set_trace()
+    # username = get_object_or_404(User, username=request.user.username).username
     username = request.user.get_username()
+    
     context = {}
+    if photo.user.username != username and photo.published != 'PUBLIC':
+        raise Http404('Photo not found.')
+    
     if photo.user.username == username or photo.published == 'PUBLIC':
         context['photo'] = photo
 
@@ -13,9 +21,8 @@ def photo_view(request, photo_id):
 
 
 def photo_gallery_view(request):
-    username = request.user.get_username()
-    gallery = Photo.objects.filter(
-                user__username=username).filter(published='PUBLIC')
+    
+    gallery = Photo.objects.filter(published='PUBLIC')
     context = {
         'gallery': gallery,
     }
@@ -33,29 +40,29 @@ def album_view(request, album_id):
 
 
 def album_gallery_view(request):
-    username = request.user.get_username()
-    gallery = Album.objects.filter(
-                user__username=username).filter(published='PUBLIC')
+    
+    gallery = Album.objects.filter(published='PUBLIC')
     context = {
         'gallery': gallery,
     }
     return render(request, 'imager_images/album_gallery.html', context)
 
 
-def library_view(request, username=None):
-    owner = False
-    if not username:
-        username = request.user.get_username()
-        owner = True
-        if username == '':
-            return redirect('auth_login')
+def library_view(request):
+    username = request.user.get_username()
+    
+    if username == '':
+        return redirect('auth_login')
 
     albums = Album.objects.all().filter(user__username=username)
+    photos = Photo.objects.filter(user__username=username)
 
-    if not owner:
-        albums = albums.all().filter(published='PUBLIC')
+    # if not owner:
+    #     albums = albums.all().filter(published='PUBLIC')
+    #     photos = photos.filter(published='PUBLIC')
 
     context = {
         'albums': albums,
+        'photos': photos,
     }
     return render(request, 'imager_images/library.html', context)
