@@ -5,9 +5,8 @@ from django.contrib.auth.models import User
 
 
 def photo_view(request, photo_id):
-    photo = Photo.objects.filter(id=photo_id).first()
-    # import pdb ; pdb.set_trace()
-    # username = get_object_or_404(User, username=request.user.username).username
+    photo = get_object_or_404(Photo, id=photo_id)
+    
     username = request.user.get_username()
     
     context = {}
