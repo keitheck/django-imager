@@ -6,7 +6,10 @@ services:
   - postgresql
 
 before_script:
-  - psql -c "create database imager;" -U postgres
+  - psql -c "create database imager_site;" -U postgres
+
+env:
+  - SECRET_KEY='CodeFellowsBlue' DEBUG='True' DB_NAME='imager_site' DB_HOST='localhost'
 
 install:
   - pip install -r requirements.txt
