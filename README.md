@@ -6,6 +6,8 @@
 
 **Version**: 0.1.0
 
+[![Coverage Status](https://coveralls.io/repos/github/keitheck/django-imager/badge.svg?branch=class-31-testing)](https://coveralls.io/github/keitheck/django-imager?branch=class-31-testing)
+
 ## Overview
 An image bucket app.
 
@@ -80,6 +82,7 @@ export DB_HOST='localhost'
 | 24 April 2018 | Configured Authentication, CSS, Tested |
 | 25 April 2018 | Configured Album and Photo models. Tested |
 | 26 April 2018 | Added library, photo and album routes. Tested |
+| 30 April 2018 | Travis CI, testing extended |
 
 ## Resources
 - Django
