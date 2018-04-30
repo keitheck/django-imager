@@ -1,10 +1,10 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from imager_profile.tests import ProfileFactory
+from imager_profile.tests.test_models import ProfileFactory
 
 
-class ViewTests(TestCase):
+class AuthTests(TestCase):
     """test class that tests login view"""
     @classmethod
     def setUp(cls):
