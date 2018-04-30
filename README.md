@@ -6,6 +6,8 @@
 
 **Version**: 0.1.0
 
+[![Coverage Status](https://coveralls.io/repos/github/keitheck/django-imager/badge.svg?branch=class-31-testing)](https://coveralls.io/github/keitheck/django-imager?branch=class-31-testing)
+
 ## Overview
 An image bucket app.
 
