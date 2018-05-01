@@ -1,7 +1,8 @@
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import User
 from django.test import TestCase, RequestFactory
-from django.urls import reverse
-from ..views import library_view
+from django.urls import reverse, reverse_lazy
+from django.http import Http404
+from ..views import library_view, photo_view
 from ..models import Album, Photo
 from model_mommy import mommy
 
@@ -33,26 +34,63 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'imager_images/photo.html')
 
+    def test_non_public_photo_raises_404(self):
+        """Validate a non-public photo raises a 404."""
+        user = User.objects.first()
+        photo = Photo.objects.exclude(user=user).first()
+        photo.published = 'PRIVATE'
+        photo.save()
+        request = RequestFactory().get(reverse_lazy('photo', args=[photo.id]))
+        request.user = user
+        with self.assertRaises(Http404):
+            photo_view(request, photo.id)
+
     def test_album_view(self):
         """Validate album view exists and renders."""
         album = Album.objects.all().first()
         album.user = User.objects.all().first()
+        album.published = 'PUBLIC'
         album.save()
-        response = self.client.get(reverse('album', args=[album.id]))
+        response = self.client.get(reverse_lazy('album', args=[album.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'imager_images/album.html')
 
+    def test_non_public_album_raises_404(self):
+        """Validate a non-public album raises a 404."""
+        user = User.objects.first()
+        album = Album.objects.exclude(user=user).first()
+        album.published = 'PRIVATE'
+        album.save()
+        request = RequestFactory().get(reverse_lazy('album', args=[album.id]))
+        request.user = user
+        with self.assertRaises(Http404):
+            photo_view(request, album.id)
+
     def test_photo_gallery_view(self):
-        """Validate photo_gallery view exists and renders."""
+        """Validate photo_gallery view exists."""
         response = self.client.get(reverse('photo_gallery'))
         self.assertEqual(response.status_code, 200)
+
+    def test_photo_gallery_view_renders_photo_gallery_template(self):
+        """Validate correct template is used."""
+        user = User.objects.all().first()
+        self.client.force_login(user)
+        response = self.client.get(reverse_lazy('photo_gallery'))
         self.assertTemplateUsed(response, 'imager_images/photo_gallery.html')
+        self.client.logout()
 
     def test_album_gallery_view(self):
-        """Validate album_gallery view exists and renders."""
+        """Validate album_gallery view exists."""
         response = self.client.get(reverse('album_gallery'))
         self.assertEqual(response.status_code, 200)
+
+    def test_album_gallery_view_renders_album_gallery_template(self):
+        """Validate correct template is used."""
+        user = User.objects.all().first()
+        self.client.force_login(user)
+        response = self.client.get(reverse_lazy('album_gallery'))
         self.assertTemplateUsed(response, 'imager_images/album_gallery.html')
+        self.client.logout()
 
     def test_library_view_redirect(self):
         """Validate library view redirects without login."""
@@ -67,3 +105,11 @@ class ViewTests(TestCase):
         request.user = user
         response = library_view(request)
         self.assertEqual(response.status_code, 200)
+
+    def test_library_view_renders_library_template(self):
+        """Validate correct template is used."""
+        user = User.objects.all().first()
+        self.client.force_login(user)
+        response = self.client.get(reverse_lazy('library'))
+        self.assertTemplateUsed(response, 'imager_images/library.html')
+        self.client.logout()

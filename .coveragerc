@@ -5,6 +5,7 @@ omit =
     */ENV/*
     */migrations/*
     */test/*
+    */tests/*
     */admin.py
     */permissions.py
     */apps.py
