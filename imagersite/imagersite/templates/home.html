@@ -3,15 +3,21 @@
 {% load thumbnail %}
 {% block content %}
 <section class="welcome">
-  <h1>Welcome to ImagerSite!</h1>
+  <div class="welcome_message">
+  <h3 id="welcome-h3">Welcome</h3>
+  <h3>to</h3>
+  <h3>ImagerSite</h3>
+  
+  </div>
+  <div class="welcome_photo"></div>
   {% if banner %}
     {% comment %} {% thumbnail banner.image as im %} {% endcomment %}
     <img src="{{ banner.image.url }}" class="banner-image">
     {% comment %} {% endthumbnail %} {% endcomment %}
   {% else %}
     <img src="{% static "images/banner.png" %}" class="banner-image">
-
   {% endif %}
+  </div>
   <h2>Browse. Share. Click. Consume.</h2>
 </section>
 {% endblock %}
