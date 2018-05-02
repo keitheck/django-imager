@@ -4,6 +4,9 @@ from imager_images.models import Photo, Album
 
 
 def profile_view(request, username=None):
+    if not request.user.is_authenticated:
+        return redirect('auth_login')
+
     if not username:
         username = request.user.get_username()
         if username == '':
