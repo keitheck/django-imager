@@ -1,6 +1,6 @@
-* {
+/* * {
   outline: orange dotted 1px;
-}
+} */
 
 p, a {
   font-family: 'Montserrat';
@@ -21,4 +21,3 @@ a:hover {
 header {
   
 }
-
