@@ -32,6 +32,10 @@ def album_view(request, album_id):
     album = Album.objects.filter(id=album_id).first()
     username = request.user.get_username()
     context = {}
+
+    if album.user.username != username and album.published != 'PUBLIC':
+        raise Http404('Album not found.')
+
     if album.user.username == username or album.published == 'PUBLIC':
         context['album'] = album
 

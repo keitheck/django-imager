@@ -1,17 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if user.username == profile.user.username %}
-<a href="{% url "library" %}">{{user.username}}'s Library</a>
-{% endif %}
-<h2>Album Information</h2>
-<p>{{profile.user.username}}'s album count: {{profile.user.albums.count}}</p>
-<p>{{profile.user.username}}'s public album count: {{public_albums.count}}</p>
-<p>{{profile.user.username}}'s shared album count: {{shared_albums.count}}</p>
-<p>{{profile.user.username}}'s private album count: {{private_albums.count}}</p>
-<h2>Photo Information</h2>
-<p>{{profile.user.username}}'s photo count: {{profile.user.photos.count}}</p>
-<p>{{profile.user.username}}'s public photo count: {{public_photos.count}}</p>
-<p>{{profile.user.username}}'s shared photo count: {{shared_photos.count}}</p>
-<p>{{profile.user.username}}'s private photo count: {{private_photos.count}}</p>
+<section class="user-profile">
+  <p>{{profile.user.username}}'s Profile</p>
+  <table class="tbl-user-profile">
+    <tr>
+      <td>Location:</td>
+      {% if profile.user.location %}
+      <td>{{profile.user.location}}</td>
+      {% else %}
+      <td>N/A</td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td>Website:</td>
+      {% if profile.user.website %}
+      <td>{{profile.user.website}}</td>
+      {% else %}
+      <td>N/A</td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td>Camera:</td>
+      {% if profile.user.camera %}
+      <td>{{profile.user.camera}}</td>
+      {% else %}
+      <td>N/A</td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td>Bio:</td>
+      {% if profile.user.bio %}
+      <td>{{profile.user.bio}}</td>
+      {% else %}
+      <td>N/A</td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td>Albums:</td>
+      <td>{{public_albums.count}} Public <span>|</span> {{shared_albums.count}} Shared <span>|</span> {{private_albums.count}} Private</td>
+    </tr>
+    <tr>
+      <td>Photos:</td>
+      <td>{{public_photos.count}} Public <span>|</span> {{shared_photos.count}} Shared <span>|</span> {{private_photos.count}} Private</td>
+    </tr>
+  </table>
+</section>
 {% endblock %}

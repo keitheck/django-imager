@@ -2,6 +2,8 @@
 {% load static %}
 {% block content %}
 {% if photo.image %}
-<img src="{{ photo.image.url }}">
+<div class="photo-view-div">
+<img src="{{ photo.image.url }}" class="photo-view">
+</div>
 {% endif %}
 {% endblock %}

@@ -1,6 +1,7 @@
 header li {
   display: inline-block;
   width: 100px;
+  letter-spacing: 4px;
 }
 
 .banner-image {
@@ -50,36 +51,59 @@ header li {
   color: #8F0109;
 }
 
-/* header li {
-  display: inline-block;
-  width: 100px;
+.user-profile {
+  text-align: center;
+  margin: 0 auto;
 }
 
-.banner-image {
+.user-profile p {
+  color: #8F0109;
+  font-weight: bold;
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+.tbl-user-profile {
   width: 100%;
 }
 
-.helptext {
-  display: none;
-}
-
-.registration-form, .login-form {
-  margin: 0 auto;
-  text-align: center;
-}
-
-.registration-form input, .login-form input {
-  display: block;
-  margin: 20px auto;
-}
-
-.registration-form ul {
-  display: none;
-}
-
-.registration-form h2, .login-form h2 {
-  margin: 50px;
+.tbl-user-profile td:first-child {
   font-family: 'Monoton';
-  font-size: 36px;
-  color: #8F0109;
-} */
+  font-size: 20px;
+  text-align: right;
+  padding: 0 20px 30px 0;
+  color: #19532a;
+}
+
+.tbl-user-profile span {
+  color: #19532a;
+  font-weight: bold;
+}
+
+.tbl-user-profile td:last-child {
+  font-family: 'Montserrat';
+  text-align: left;
+}
+
+.tagline {
+  font-family: 'Montserrat';
+  font-size: 16px;
+  line-height: 1.1em;
+  text-align: center;
+  letter-spacing: 4px;
+}
+
+/* photo.html below */
+
+.photo-view-div {
+  width: 100%;
+}
+
+.photo-view {
+  width: 100%;
+  transition-duration: 230ms;
+}
+
+.photo-view:hover {
+  width: 99%;
+}
