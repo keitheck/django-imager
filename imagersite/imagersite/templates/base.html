@@ -8,6 +8,7 @@
   <title>{{title}}</title>
   <link rel=stylesheet href={% static "styles/reset.css" %}>
   <link rel=stylesheet href={% static "styles/base.css" %}>
+  <link rel=stylesheet href={% static "styles/home.css" %}>
   <link rel=stylesheet href={% static "styles/layout.css" %}>
   <link rel=stylesheet href={% static "styles/modules.css" %}>
   <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Gamja+Flower|Monoton|Montserrat|Slabo+27px" rel="stylesheet">
@@ -32,9 +33,10 @@
     <h3>No Content</h3>
     {% endblock content%}
   </main>
+  {% comment %} <div class="push"></div> {% endcomment %}
+  </div>
   <footer>
-
+      <p class="tagline">Browse. Share. Click. Consume.</p>
   </footer>
-
 </body>
 </html>

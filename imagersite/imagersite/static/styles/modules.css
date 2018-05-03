@@ -1,6 +1,7 @@
 header li {
   display: inline-block;
   width: 100px;
+  letter-spacing: 4px;
 }
 
 .banner-image {
@@ -82,3 +83,27 @@ header li {
 .tbl-user-profile td:last-child {
   font-family: 'Montserrat';
   text-align: left;
+}
+
+.tagline {
+  font-family: 'Montserrat';
+  font-size: 16px;
+  line-height: 1.1em;
+  text-align: center;
+  letter-spacing: 4px;
+}
+
+/*  photo.html below   */
+
+.photo-view-div {
+  width: 100%;
+}
+
+.photo-view {
+  width: 100%;
+  transition-duration: 230ms;
+}
+
+.photo-view:hover {
+  width: 99%;
+}
