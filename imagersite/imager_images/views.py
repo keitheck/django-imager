@@ -1,18 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Album, Photo
 from django.http import Http404
-from django.contrib.auth.models import User
 
 
 def photo_view(request, photo_id):
     photo = get_object_or_404(Photo, id=photo_id)
-    
+
     username = request.user.get_username()
-    
+
     context = {}
     if photo.user.username != username and photo.published != 'PUBLIC':
         raise Http404('Photo not found.')
-    
+
     if photo.user.username == username or photo.published == 'PUBLIC':
         context['photo'] = photo
 
@@ -20,7 +19,7 @@ def photo_view(request, photo_id):
 
 
 def photo_gallery_view(request):
-    
+
     gallery = Photo.objects.filter(published='PUBLIC')
     context = {
         'gallery': gallery,
@@ -29,8 +28,10 @@ def photo_gallery_view(request):
 
 
 def album_view(request, album_id):
-    album = Album.objects.filter(id=album_id).first()
+    album = get_object_or_404(Album, id=album_id)
+
     username = request.user.get_username()
+
     context = {}
 
     if album.user.username != username and album.published != 'PUBLIC':
@@ -43,7 +44,6 @@ def album_view(request, album_id):
 
 
 def album_gallery_view(request):
-    
     gallery = Album.objects.filter(published='PUBLIC')
     context = {
         'gallery': gallery,
@@ -53,7 +53,7 @@ def album_gallery_view(request):
 
 def library_view(request):
     username = request.user.get_username()
-    
+
     if username == '':
         return redirect('auth_login')
 
