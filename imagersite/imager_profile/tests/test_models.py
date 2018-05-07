@@ -37,7 +37,6 @@ class ProfileUnitTests(TestCase):
             user.set_password(factory.Faker('password'))
             user.save()
 
-            ProfileFactory.create(user=user)
         cls.user_id = user.id
 
     @classmethod

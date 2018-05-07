@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.test import TestCase, RequestFactory
-from ..models import ImagerProfile
 from model_mommy import mommy
 from django.urls import reverse_lazy
 
@@ -9,8 +8,7 @@ class ProfileRouteTest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         for _ in range(2):
-            user = mommy.make(User)
-            mommy.make(ImagerProfile, user=user)
+            mommy.make(User)
 
     def test_user_views_own_profile(self):
         """Test that user's own profile renders."""
