@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, AnonymousUser
 from django.test import TestCase, RequestFactory
-from ..views import profile_view
+from ..views import ProfileView
 from ..models import ImagerProfile
 from model_mommy import mommy
 from django.urls import reverse_lazy
@@ -18,7 +18,7 @@ class ProfileViewTest(TestCase):
         """Test that user's own profile renders."""
         request = self.factory.get(reverse_lazy('profile'))
         request.user = User.objects.first()
-        response = profile_view(request)
+        response = ProfileView.as_view()(request)
 
         self.assertTrue(response.status_code == 200)
 
@@ -28,7 +28,7 @@ class ProfileViewTest(TestCase):
         request = self.factory.get(reverse_lazy('named_profile', args=[
             User.objects.exclude(username=user.username).first().username]))
         request.user = User.objects.first()
-        response = profile_view(request)
+        response = ProfileView.as_view()(request)
 
         self.assertTrue(response.status_code == 200)
 
@@ -37,7 +37,7 @@ class ProfileViewTest(TestCase):
         request = self.factory.get(reverse_lazy('named_profile', args=[
             User.objects.first().username]))
         request.user = AnonymousUser()
-        response = profile_view(request)
+        response = ProfileView.as_view()(request)
 
         self.assertTrue(response.status_code == 302)
 
@@ -49,4 +49,4 @@ class ProfileViewTest(TestCase):
         request.user = user
 
         with self.assertRaises(Http404):
-            profile_view(request)
+            ProfileView.as_view()(request)

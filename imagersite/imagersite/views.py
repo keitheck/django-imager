@@ -1,16 +1,16 @@
-from django.shortcuts import render
 from imager_images.models import Photo
+from django.views.generic import TemplateView
 
 
-def home_view(request):
-    '''Default "home" route'''
+class HomeView(TemplateView):
+    """
+    Default home route.
+    """
+    template_name = 'home.html'
 
-    context = {
-        'title': 'ImagerSite Home'
-    }
-
-    if Photo.objects.all().count():
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'ImagerSite Home'
         context['banner'] = Photo.objects.filter(
             published='PUBLIC').order_by('?').first()
-
-    return render(request, 'home.html', context)
+        return context
