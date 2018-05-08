@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase, RequestFactory
 from django.urls import reverse, reverse_lazy
 from django.http import Http404
-from ..views import library_view, photo_view
+from ..views import LibraryView, PhotoView
 from ..models import Album, Photo
 from model_mommy import mommy
 
@@ -24,7 +24,7 @@ class ViewTests(TestCase):
         Photo.objects.all().delete()
         Album.objects.all().delete()
 
-    def test_photo_view(self):
+    def test_PhotoView(self):
         """Validate photo view exists and renders."""
         photo = Photo.objects.all().first()
         photo.user = User.objects.all().first()
@@ -43,7 +43,7 @@ class ViewTests(TestCase):
         request = RequestFactory().get(reverse_lazy('photo', args=[photo.id]))
         request.user = user
         with self.assertRaises(Http404):
-            photo_view(request, photo.id)
+            PhotoView.as_view()(request, photo.id)
 
     def test_album_view(self):
         """Validate album view exists and renders."""
@@ -64,7 +64,7 @@ class ViewTests(TestCase):
         request = RequestFactory().get(reverse_lazy('album', args=[album.id]))
         request.user = user
         with self.assertRaises(Http404):
-            photo_view(request, album.id)
+            PhotoView.as_view()(request, album.id)
 
     def test_photo_gallery_view(self):
         """Validate photo_gallery view exists."""
@@ -103,7 +103,7 @@ class ViewTests(TestCase):
         self.client.login(username=user.username, password=user.password)
         request = RequestFactory().get(reverse('library'))
         request.user = user
-        response = library_view(request)
+        response = LibraryView.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
     def test_library_view_renders_library_template(self):

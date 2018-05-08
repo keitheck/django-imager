@@ -13,6 +13,8 @@ class ProfileView(TemplateView):
         if not self.request.user.is_authenticated:
             return redirect('auth_login')
 
+        return super().get(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
 
         context = super().get_context_data(**kwargs)
