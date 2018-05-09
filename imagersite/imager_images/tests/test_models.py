@@ -45,7 +45,7 @@ class PhotoAlbumUnitTests(TestCase):
 
     def test_photo_is_created(self):
         """tests if photos were created successfully."""
-        self.assertTrue(Photo.objects.count())
+        self.assertTrue(Photo.objects.count() == 5)
 
     def test_photo_str(self):
         """Test photo str is represented appropriately."""
@@ -54,7 +54,7 @@ class PhotoAlbumUnitTests(TestCase):
 
     def test_album_is_created(self):
         """tests if album were created successfully."""
-        self.assertTrue(Album.objects.count())
+        self.assertTrue(Album.objects.count() == 5)
 
     def test_album_str(self):
         """Test album str is represented appropriately."""

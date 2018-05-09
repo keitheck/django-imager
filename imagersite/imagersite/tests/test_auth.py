@@ -1,16 +1,14 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from imager_profile.tests.test_models import ProfileFactory
 
 
 class AuthTests(TestCase):
     """test class that tests login view"""
     @classmethod
     def setUp(cls):
-        user = User.objects.create_user(
+        User.objects.create_user(
             username='testuser', password='SecretPassword')
-        ProfileFactory.create(user=user)
 
     def test_login(self):
         """testing that user autheticated correctly after login"""

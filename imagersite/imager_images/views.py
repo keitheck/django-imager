@@ -6,6 +6,7 @@ from django.views.generic.list import ListView
 from django.views.generic import CreateView
 from .forms import AlbumForm, PhotoForm
 
+
 class PhotoView(DetailView):
     template_name = 'imager_images/photo.html'
     model = Photo

@@ -11,8 +11,7 @@ class ProfileViewTest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         for _ in range(2):
-            user = mommy.make(User)
-            mommy.make(ImagerProfile, user=user)
+            mommy.make(User)
 
     def test_user_views_own_profile(self):
         """Test that user's own profile renders."""
@@ -40,13 +39,3 @@ class ProfileViewTest(TestCase):
         response = ProfileView.as_view()(request)
 
         self.assertTrue(response.status_code == 302)
-
-    def test_invalid_profile_raises_404(self):
-        """Test accessing a user with no profile raises a 404."""
-        user = mommy.make(User)
-        request = self.factory.get(reverse_lazy('named_profile', args=[
-            User.objects.filter(username=user.username).first().username]))
-        request.user = user
-
-        with self.assertRaises(Http404):
-            ProfileView.as_view()(request)
