@@ -75,6 +75,14 @@ export DB_HOST='localhost'
 
 - user's personal library
 
+### /images/photos/add
+
+- Upload photos
+
+### /images/albums/add
+
+- Upload albums
+
 ## Change Log
 | Date | |
 |:--|:--|
@@ -83,6 +91,7 @@ export DB_HOST='localhost'
 | 25 April 2018 | Configured Album and Photo models. Tested |
 | 26 April 2018 | Added library, photo and album routes. Tested |
 | 30 April 2018 | Travis CI, testing extended |
+| 08 May 2018 | Added the ability to add albums and photos |
 
 ## Resources
 - Django
