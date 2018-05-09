@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase, RequestFactory
 from django.urls import reverse, reverse_lazy
 from django.http import Http404
-from ..views import LibraryView, PhotoView
+from ..views import LibraryView, PhotoView, AlbumAddView, PhotoAddView
 from ..models import Album, Photo
 from model_mommy import mommy
 
@@ -113,3 +113,11 @@ class ViewTests(TestCase):
         response = self.client.get(reverse_lazy('library'))
         self.assertTemplateUsed(response, 'imager_images/library.html')
         self.client.logout()
+
+    def test_album_add_view_exists(self):
+        """Validate album add view exists for logged-in user."""
+        user = User.objects.first()
+        request = RequestFactory().get(reverse('album_add'))
+        request.user = user
+        response = AlbumAddView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
