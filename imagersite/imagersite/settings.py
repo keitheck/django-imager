@@ -137,3 +137,23 @@ ACCOUNT_ACTIVATION_DAYS = 1
 LOGIN_REDIRECT_URL = '/profile'
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+LOGGING = {
+   'version': 1,
+   'disable_existing_loggers': False,
+   'handlers': {
+       'file': {
+           'level': 'DEBUG',
+           'class': 'logging.FileHandler',
+           'filename': 'debug.log',
+       },
+   },
+   'loggers': {
+       'django': {
+           'handlers': ['file'],
+           'level': 'DEBUG',
+           'propagate': True,
+       },
+   },
+}

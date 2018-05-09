@@ -1,71 +1,139 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from .models import Album, Photo
 from django.http import Http404
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from django.views.generic import CreateView
+from .forms import AlbumForm, PhotoForm
 
 
-def photo_view(request, photo_id):
-    photo = get_object_or_404(Photo, id=photo_id)
+class PhotoView(DetailView):
+    template_name = 'imager_images/photo.html'
+    model = Photo
+    pk_url_kwarg = 'photo_id'
 
-    username = request.user.get_username()
+    def get(self, *args, **kwargs):
+        try:
+            self.photo = get_object_or_404(Photo, id=kwargs['photo_id'])
+        except KeyError:
+            raise Http404
+        self.username = self.request.user.get_username()
 
-    context = {}
-    if photo.user.username != username and photo.published != 'PUBLIC':
-        raise Http404('Photo not found.')
+        if self.photo.user.username != \
+                self.username and self.photo.published != 'PUBLIC':
+            raise Http404('Photo not found.')
 
-    if photo.user.username == username or photo.published == 'PUBLIC':
-        context['photo'] = photo
+        return super().get(*args, **kwargs)
 
-    return render(request, 'imager_images/photo.html', context)
-
-
-def photo_gallery_view(request):
-
-    gallery = Photo.objects.filter(published='PUBLIC')
-    context = {
-        'gallery': gallery,
-    }
-    return render(request, 'imager_images/photo_gallery.html', context)
-
-
-def album_view(request, album_id):
-    album = get_object_or_404(Album, id=album_id)
-
-    username = request.user.get_username()
-
-    context = {}
-
-    if album.user.username != username and album.published != 'PUBLIC':
-        raise Http404('Album not found.')
-
-    if album.user.username == username or album.published == 'PUBLIC':
-        context['album'] = album
-
-    return render(request, 'imager_images/album.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['photo'] = self.photo
+        return context
 
 
-def album_gallery_view(request):
-    gallery = Album.objects.filter(published='PUBLIC')
-    context = {
-        'gallery': gallery,
-    }
-    return render(request, 'imager_images/album_gallery.html', context)
+class PhotoGalleryView(ListView):
+    template_name = 'imager_images/photo_gallery.html'
+    context_object_name = 'gallery'
+
+    def get_queryset(self):
+        return Photo.objects.filter(published='PUBLIC')
 
 
-def library_view(request):
-    username = request.user.get_username()
+class AlbumView(DetailView):
+    template_name = 'imager_images/album.html'
+    model = Album
+    pk_url_kwarg = 'album_id'
 
-    if username == '':
-        return redirect('auth_login')
+    def get(self, *args, **kwargs):
+        try:
+            self.album = get_object_or_404(Album, id=kwargs['album_id'])
+        except KeyError:
+            raise Http404
+        self.username = self.request.user.get_username()
 
-    albums = Album.objects.all().filter(user__username=username)
-    photos = Photo.objects.filter(user__username=username)
+        if self.album.user.username != \
+                self.username and self.album.published != 'PUBLIC':
+            raise Http404('Album not found.')
 
-    # if not owner:
-    #     albums = albums.all().filter(published='PUBLIC')
-    #     photos = photos.filter(published='PUBLIC')
+        return super().get(*args, **kwargs)
 
-    context = {
-        'albums': albums,
-        'photos': photos,
-    }
-    return render(request, 'imager_images/library.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['album'] = self.album
+        return context
+
+
+class AlbumGalleryView(ListView):
+    template_name = 'imager_images/album_gallery.html'
+    context_object_name = 'gallery'
+
+    def get_queryset(self):
+        return Album.objects.filter(published='PUBLIC')
+
+
+class LibraryView(ListView):
+    template_name = 'imager_images/library.html'
+    model = Album
+    context_object_name = 'albums'
+
+    def get_queryset(self):
+        return Album.objects.filter(user__username=self.username)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['photos'] = Photo.objects.filter(user__username=self.username)
+        return context
+
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('auth_login')
+
+        self.username = self.request.user.get_username()
+        return super().get(*args, **kwargs)
+
+
+class LibraryAddView(CreateView):
+    """
+    This creates a view that PhotoAddView and AlbumAddView inherit from.
+    """
+    success_url = '../library'
+
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('auth_login')
+    
+        return super().get(*args, **kwargs)
+
+    def post(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('auth_login')
+    
+        return super().post(*args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'username': self.request.user.username})
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class PhotoAddView(LibraryAddView):
+    """
+    Inherits from LibraryAddView
+    """
+    template_name = 'imager_images/photo_add.html'
+    model = Photo
+    form_class = PhotoForm
+
+
+class AlbumAddView(LibraryAddView):
+    """
+    Inherits from LibraryAddView
+    """
+    template_name = 'imager_images/album_add.html'
+    model = Album
+    form_class = AlbumForm   
+    
