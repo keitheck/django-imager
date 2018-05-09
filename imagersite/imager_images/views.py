@@ -3,7 +3,8 @@ from .models import Album, Photo
 from django.http import Http404
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-
+from django.views.generic import CreateView
+from .forms import AlbumForm, PhotoForm
 
 class PhotoView(DetailView):
     template_name = 'imager_images/photo.html'
@@ -88,3 +89,50 @@ class LibraryView(ListView):
 
         self.username = self.request.user.get_username()
         return super().get(*args, **kwargs)
+
+
+class LibraryAddView(CreateView):
+    """
+    This creates a view that PhotoAddView and AlbumAddView inherit from.
+    """
+    success_url = '../library'
+
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('auth_login')
+    
+        return super().get(*args, **kwargs)
+
+    def post(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('auth_login')
+    
+        return super().post(*args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'username': self.request.user.username})
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class PhotoAddView(LibraryAddView):
+    """
+    Inherits from LibraryAddView
+    """
+    template_name = 'imager_images/photo_add.html'
+    model = Photo
+    form_class = PhotoForm
+
+
+class AlbumAddView(LibraryAddView):
+    """
+    Inherits from LibraryAddView
+    """
+    template_name = 'imager_images/album_add.html'
+    model = Album
+    form_class = AlbumForm   
+    

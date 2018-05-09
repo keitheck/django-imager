@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="photo-add">
+    <p>Add new album:</p>
+    <form class="photo-add-form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>Add Photo</button>
+    </form>
+</div>
+{% endblock %}
