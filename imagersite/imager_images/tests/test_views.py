@@ -110,18 +110,18 @@ class ViewTests(TestCase):
             photo.published = 'PRIVATE'
             photo.save()
         request = RequestFactory().get(reverse_lazy('photo_gallery'))
-        response = render(PhotoGalleryView.as_view()(request), 'imager_images/photo_gallery.html')
+        response = PhotoGalleryView.as_view()(request).render()
         for photo in Photo.objects.all():
             self.assertNotIn(photo.title, response.content.decode('utf-8'))
 
-#      def test_photo_gallery_view_has_public(self):
-#          """Validate photo gallery shows all public photos."""
-#          photo = Photo.objects.all().first()
-#          photo.published = 'PUBLIC'
-#          photo.save()
-#          request = RequestFactory().get(reverse_lazy('photo_gallery'))
-#          response = render(PhotoGalleryView.as_view()(request), 'imager_images/photo_gallery.html')
-#          self.assertIn(photo.title, response.content.decode('utf-8'))
+    def test_photo_gallery_view_has_public(self):
+        """Validate photo gallery shows all public photos."""
+        photo = Photo.objects.first()
+        photo.published = 'PUBLIC'
+        photo.save()
+        request = RequestFactory().get(reverse_lazy('photo_gallery'))
+        response = PhotoGalleryView.as_view()(request).render()
+        self.assertIn(photo.title, response.content.decode('utf-8'))
 
     def test_album_gallery_view_status(self):
         """Validate 200 viewing album gallery."""
@@ -136,18 +136,18 @@ class ViewTests(TestCase):
             album.save()
         request = RequestFactory().get(reverse_lazy('album_gallery'))
         request.user = User.objects.first()
-        response = render(AlbumGalleryView.as_view()(request), 'imager_images/album_gallery.html')
+        response = AlbumGalleryView.as_view()(request).render()
         for album in Album.objects.all():
             self.assertNotIn(album.title, response.content.decode('utf-8'))
 
-#      def test_album_gallery_view_has_public(self):
-#          """Validate album gallery shows all public albums."""
-#          album = Album.objects.all().first()
-#          album.published = 'PUBLIC'
-#          album.save()
-#          request = RequestFactory().get(reverse_lazy('album_gallery'))
-#          response = render(AlbumGalleryView.as_view()(request), 'imager_images/album_gallery.html')
-#          self.assertIn(album.title, response.content.decode('utf-8'))
+    def test_album_gallery_view_has_public(self):
+        """Validate album gallery shows all public albums."""
+        album = Album.objects.all().first()
+        album.published = 'PUBLIC'
+        album.save()
+        request = RequestFactory().get(reverse_lazy('album_gallery'))
+        response = AlbumGalleryView.as_view()(request).render()
+        self.assertIn(album.title, response.content.decode('utf-8'))
 
     def test_library_view_user(self):
         """Validate library view exists and is rendered with user"""
@@ -196,13 +196,6 @@ class ViewTests(TestCase):
         response = PhotoAddView.as_view()(request)
         self.assertEqual(response.status_code, 302)
 
-#    def test_album_add_adds_with_required(self):
-#        request = RequestFactory().post(reverse('album_add'),
-#                {'image': tempfile.NamedTemporaryFile(suffix='.jpg').name, 'published': 'PUBLIC'})
-#        request.user = User.objects.first()
-#        response = AlbumAddView.as_view()(request)
-#        self.assertEqual(response.status_code, 302)
-
     def test_library_view_redirect_anon(self):
         """Validate library view redirects when anon."""
         request = RequestFactory().get(reverse('library'))
@@ -219,3 +212,8 @@ class ViewTests(TestCase):
         request.user = user
         response = LibraryView.as_view()(request)
         self.assertContains(response, album.title)
+
+   # def test_photo_add_adds(self):
+   #     request = RequestFactory().post(reverse('photo_add'), {'image': tempfile.NamedTemporaryFile(suffix='.jpg').name, 'title': 'Untitled', 'description': 'Description', 'published': 'PUBLIC'})
+   #     response = LibraryView.as_view()(request)
+   #     self.assertEqual(response.status_code, 302)

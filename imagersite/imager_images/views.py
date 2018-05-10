@@ -128,7 +128,6 @@ class PhotoAddView(LibraryAddView):
     model = Photo
     form_class = PhotoForm
 
-
 class AlbumAddView(LibraryAddView):
     """
     Inherits from LibraryAddView
