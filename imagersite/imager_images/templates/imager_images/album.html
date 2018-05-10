@@ -2,15 +2,21 @@
 {% load thumbnail %}
 
 {% block content %}
-<p>{{album.title}}<p>
-<p>{{album.description}}</p>
-<p>{{album.date_created}}</p>
-{% thumbnail album.cover.image "100x100" crop="center" as im %}
-<img src="{{im.url}}">
-{% endthumbnail %}
-{% for image in album.photos.all %}
-{% thumbnail image.image "100x100" crop="center" as im %}
-<a href="{% url "photo" photo_id=image.id %}"><img src="{{ im.url }}"></a>
-{% endthumbnail %}
-{% endfor %}
+<div class="alb-contain">
+    <div class="alb-contain-inner">
+        <h3>{{album.title}}</h3>
+        <h4>{{album.description}}</h4>
+        <h4>{{album.date_created}}</h4>
+        {% comment %} {% thumbnail album.cover.image "100x100" crop="center" as im %}
+        <img src="{{im.url}}">
+        {% endthumbnail %} {% endcomment %}
+        {% for image in album.photos.all %}
+        {% thumbnail image.image "100x100" crop="center" as im %}
+        <div class="thumb-container">
+            <a href="{% url "photo" photo_id=image.id %}"><img src="{{ im.url }}" class="album-thumb"></a>
+        </div>
+        {% endthumbnail %}
+        {% endfor %}
+    <div>
+</div>
 {% endblock %}

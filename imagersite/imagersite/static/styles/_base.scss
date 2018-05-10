@@ -1,6 +1,3 @@
-/* * {
-  outline: orange dotted 1px;
-} */
 
 p, a {
   font-family: 'Montserrat';
@@ -9,15 +6,35 @@ p, a {
 }
 
 a {
-  color: #19532a;
+  // color: #19532a;
   text-decoration: none;
 }
 
 a:hover {
-  color: #19532a;
+  // color: #19532a;
   text-decoration: underline;
 }
 
-header {
-  
+h2 {
+  font-family: $main-font;
+  letter-spacing: 8px;
+  font-size: 1.2em;
+  line-height: 1.4em;
+  text-shadow: $shadow-color;
+}
+
+h3 {
+  font-family: $main-font;
+  letter-spacing: 8px;
+  font-size: 1.6em;
+  line-height: 1.8em;
+  text-shadow: $shadow-color;
+}
+
+h4 {
+  font-family: $main-font;
+  letter-spacing: 4px;
+  font-size: 1.1em;
+  line-height: 1.2em;
+  text-shadow: $shadow-color;
 }

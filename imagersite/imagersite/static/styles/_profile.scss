@@ -1,0 +1,33 @@
+.user-profile {
+    text-align: center;
+    margin: 0 auto;
+}
+  
+.user-profile p {
+    color: #8F0109;
+    font-weight: bold;
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.tbl-user-profile {
+    width: 100%;
+}
+
+.tbl-user-profile td:first-child {
+    font-family: 'Monoton';
+    font-size: 20px;
+    text-align: right;
+    padding: 0 20px 30px 0;
+    color: #19532a;
+}
+
+.tbl-user-profile span {
+    color: #19532a;
+    font-weight: bold;
+}
+
+.tbl-user-profile td:last-child {
+    font-family: 'Montserrat';
+    text-align: left;
+}

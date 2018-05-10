@@ -1,0 +1,21 @@
+header {
+  width: 100%;
+  height: 20px;
+  padding: 10px 20px 10px 20px;
+  background-color: $header-background;
+  color: $white;
+  margin-bottom: 30px;
+}
+
+header a {
+  color: $white;
+  font-family: 'Montserrat';
+}
+
+header li {
+  display: inline-block;
+  width: 100px;
+  letter-spacing: 4px;
+}
+
+
