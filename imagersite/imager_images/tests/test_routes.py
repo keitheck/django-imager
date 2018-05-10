@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse, reverse_lazy
 from ..models import Album, Photo
 from model_mommy import mommy
+import tempfile
 
 
 class RouteTests(TestCase):
@@ -140,3 +141,30 @@ class RouteTests(TestCase):
         photo.save()
         response = self.client.get(reverse('photo', args=[photo.id]))
         self.assertTemplateUsed(response, 'imager_images/photo.html')
+
+    def test_album_add_view_exists(self):
+        """Validate album add view exists for logged-in user."""
+        user = User.objects.first()
+        self.client.force_login(user)
+        response = self.client.get(reverse('album_add'))
+        self.client.logout()
+        self.assertEqual(response.status_code, 200)
+
+    def test_photo_add_view_exists(self):
+        """Validate photo add view exists for logged-in user."""
+        user = User.objects.first()
+        self.client.force_login(user)
+        response = self.client.get(reverse('photo_add'))
+        self.client.logout()
+        self.assertEqual(response.status_code, 200)
+
+    def test_album_add_redirects_if_not_logged_in(self):
+        """Validate can't access view if anon."""
+        response = self.client.get(reverse('album_add'))
+        self.assertEqual(response.status_code, 302)
+
+    def test_photo_add_redirects_if_not_logged_in(self):
+        """Validate can't access view if anon."""
+        response = self.client.get(reverse('photo_add'))
+        self.assertEqual(response.status_code, 302)
+
