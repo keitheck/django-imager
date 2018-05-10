@@ -3,8 +3,10 @@ from .models import Album, Photo
 from django.http import Http404
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from django.views.generic import CreateView
-from .forms import AlbumForm, PhotoForm
+from django.views.generic import CreateView, UpdateView
+from .forms import AlbumForm, PhotoForm, AlbumEditForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 
 class PhotoView(DetailView):
@@ -120,6 +122,33 @@ class LibraryAddView(CreateView):
         return super().form_valid(form)
 
 
+class AlbumEditView(LoginRequiredMixin, UpdateView):
+    """
+    This creates a veiw that allows users to edit albums
+    """
+    template_name = 'imager_images/album_edit.html'
+    model = Album
+    form_class = AlbumEditForm
+    login_url = reverse_lazy('auth_login')
+    success_url = reverse_lazy('library')
+    pk_url_kwarg = 'album_id'
+
+    # def get(self, *args, **kwargs):
+        # album_id = self.kwargs['album_id']
+        
+
+    # def post(self, *args, **kwargs):
+    #     pass
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['username'] = self.request.user.get_username()
+        return kwargs
+
+    # def form_valid(self, form):
+    #     pass
+
+
 class PhotoAddView(LibraryAddView):
     """
     Inherits from LibraryAddView
@@ -127,6 +156,7 @@ class PhotoAddView(LibraryAddView):
     template_name = 'imager_images/photo_add.html'
     model = Photo
     form_class = PhotoForm
+
 
 class AlbumAddView(LibraryAddView):
     """
@@ -136,3 +166,5 @@ class AlbumAddView(LibraryAddView):
     model = Album
     form_class = AlbumForm   
     
+
+

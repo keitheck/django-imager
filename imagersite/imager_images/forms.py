@@ -19,6 +19,19 @@ class AlbumForm(ModelForm):
             Photo.objects.filter(user__username=username)
 
 
+class AlbumEditForm(AlbumForm):
+    """
+    Form class for editing existing album.
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        album_id = kwargs['album_id']
+        self.fields['title'].initial = Album.objects.get(id=album_id).title
+        self.fields['description'].initial = Album.objects.get(id=album_id).description
+        self.fields['date_published'].initial = Album.objects.get(id=album_id).date_published
+        self.fields['published'].initial = Album.objects.get(id=album_id).published
+    
+
 class PhotoForm(ModelForm):
     """
     Form class for user creating an photo.
