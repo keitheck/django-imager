@@ -252,4 +252,33 @@ footer {
   width: 90%;
   margin: 10px auto; }
 
+.side-nav {
+  background-color: rgba(224, 63, 198, 0.4);
+  padding: 20px;
+  width: 174px;
+  position: absolute;
+  top: 25%;
+  left: -160px;
+  transition: 350ms;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px; }
+
+.side-nav:hover {
+  left: 0; }
+
+.side-nav-container {
+  position: relative; }
+
+.menu-icon {
+  position: absolute;
+  top: 0;
+  left: 160px;
+  transform: rotate(90deg); }
+  .menu-icon h5 {
+    font-family: "Montserrat";
+    letter-spacing: auto;
+    font-size: auto;
+    line-height: auto;
+    text-shadow: #d3d3d3; }
+
 /*# sourceMappingURL=../../../../../../../../../../static/styles/_core.css.map */
