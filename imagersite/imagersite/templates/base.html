@@ -1,3 +1,4 @@
+{% load sass_tags %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,11 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{{title}}</title>
-  <link rel=stylesheet href={% static "styles/reset.css" %}>
-  <link rel=stylesheet href={% static "styles/base.css" %}>
-  <link rel=stylesheet href={% static "styles/home.css" %}>
-  <link rel=stylesheet href={% static "styles/layout.css" %}>
-  <link rel=stylesheet href={% static "styles/modules.css" %}>
+  <link rel=stylesheet href="{% sass_src 'styles/_core.scss' %}">
   <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Gamja+Flower|Monoton|Montserrat|Slabo+27px" rel="stylesheet">
 
 </head>
@@ -19,9 +16,11 @@
     <nav>
       <ul>
         {% if user.is_authenticated %}
-        <li><a href="{% url "profile" %}">{{user.username}}</a></li>
+        <li><a href="{% url "library" %}">Library</a></li>
+        <li><a href="{% url "album_gallery" %}">Explore</a></li>
         <li><a href="{% url "auth_logout" %}">Logout</a></li>
         {% else %}
+        <li><a href="{% url "album_gallery" %}">Explore</a></li>
         <li><a href="{% url "registration_register" %}">Signup</a></li>
         <li><a href="{% url "auth_login" %}">Signin</a></li>
         {% endif %}
@@ -29,6 +28,19 @@
     </nav>
   </header>
   <main>
+    {% if user.is_authenticated %}
+    <div class="side-nav">
+        <div class="side-nav-container">
+          <div class="menu-icon"><h4>My Menu:</h4></div>
+          <h4 class="profile">My Profile:</h4>
+          <li><a href="{% url "profile" %}">{{user.username}}</a></li>
+          <h4 class="create">Create:</h4>
+          <li><a href="{% url "album_add" %}">New Album</a></li>
+          <li><a href="{% url "photo_add" %}">New Photo</a></li>
+        </div>
+      </div>
+      {% endif %}
+
     {% block content %}
     <h3>No Content</h3>
     {% endblock content%}

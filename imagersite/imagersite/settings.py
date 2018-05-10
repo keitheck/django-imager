@@ -37,10 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sorl.thumbnail',
     'imagersite',
     'imager_profile',
     'imager_images',
+    'sass_processor',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -131,6 +132,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'MEDIA')
+
+# SCSS Processing
+
+SASS_PROCESSOR_ROOT = STATIC_ROOT
+SASS_PROCESSOR_AUTO_INCLUDE = True
+SASS_PROCESSOR_ENABLED = True
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+]
+
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    os.path.join(STATIC_URL, 'styles'),
+]
 
 # Django Registration
 ACCOUNT_ACTIVATION_DAYS = 1

@@ -1,0 +1,38 @@
+// * {
+//     outline: orange 1px dotted
+// }
+
+.thumb-container {
+    width: 110px;
+    height: 110px;
+    position: relative;
+    display: inline-block;
+}
+
+.album-thumb {
+    border-radius: 10px;
+    transition: 250ms;
+    margin: 20px auto;
+    border: transparent solid 3px;
+}
+
+.album-thumb:hover {
+    border: $lt-grey solid 3px;
+}
+
+.gallery-album-div {
+    position: relative;
+}
+
+.alb-contain {
+    border: $lt-grey solid 10px;
+    background-color: rgba(0,0,0,.3);
+    position: relative;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.alb-contain-inner {
+    width: 90%;
+    margin: 10px auto;
+}

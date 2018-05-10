@@ -1,0 +1,13 @@
+.photo-view-div {
+    width: 100%;
+  }
+  
+  .photo-view {
+    width: 100%;
+    transition-duration: 230ms;
+  }
+  
+  .photo-view:hover {
+    width: 120%;
+    margin-left: -90px;
+  }
