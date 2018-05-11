@@ -7,6 +7,9 @@
 <a href="{% url "album" album_id=album.id %}"></a><p>{{album.title}}<p></a>
 <p>{{album.description}}</p>
 <p>{{album.date_created}}</p>
+<a href="/images/albums/{{album.id}}/edit">
+  <button class="edit">Edit Album</button>
+</a>
 {% endfor %}
 
 <p>Your Photos:</p>
@@ -14,6 +17,13 @@
 {% thumbnail image.image "100x100" crop="center" as im %}
 <a href="{% url "photo" photo_id=image.id %}"><img src="{{ im.url }}"></a>
 {% endthumbnail %}
+<a href="/images/photos/{{image.id}}/edit">
+<button class="edit">Edit Photo</button>
+</a>
 {% endfor %}
+
+<a href="/images/photos/add">Add a photo</a>
+<a href="/images/albums/add">Add an album</a>
+
 {% endblock %}
 

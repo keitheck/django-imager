@@ -2,7 +2,6 @@
 {% load thumbnail %}
 
 {% block content %}
-<p>{{gallery.first.user.username}}'s Albums:</p>
 {% for album in gallery.all %}
 <div class="gallery-album-div">
   <p class="alb-title">{{album.title}}</p>

@@ -92,6 +92,8 @@ export DB_HOST='localhost'
 | 26 April 2018 | Added library, photo and album routes. Tested |
 | 30 April 2018 | Travis CI, testing extended |
 | 08 May 2018 | Added the ability to add albums and photos |
+| 09 May 2018 | Additional styling added
+| 10 May 2018 | Added the ability to edit albums, photos, and profiles.
 
 ## Resources
 - Django

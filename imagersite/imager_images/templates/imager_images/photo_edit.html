@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Edit Photo</h3>
+<form method="POST" class="edit-photo-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Update</button>
+</form>
+
+{% endblock %}
