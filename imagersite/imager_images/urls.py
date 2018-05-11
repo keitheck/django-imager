@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import PhotoView, PhotoGalleryView, AlbumView, \
         AlbumGalleryView, LibraryView, AlbumAddView, PhotoAddView, \
-        AlbumEditView
+        AlbumEditView, PhotoEditView
 
 urlpatterns = [
     path('photos/<int:photo_id>', PhotoView.as_view(), name='photo'),
@@ -16,9 +16,9 @@ urlpatterns = [
         AlbumEditView.as_view(),
         name='album_edit'
         ),
-    # path(
-    #     'photos/<int:photo_id>/edit', 
-    #     PhotoEditView.as_view(), 
-    #     name="photo_edit"
-    #     ),
+    path(
+        'photos/<int:photo_id>/edit',
+        PhotoEditView.as_view(),
+        name="photo_edit"
+        ),
 ]

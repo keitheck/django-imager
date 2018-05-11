@@ -45,5 +45,7 @@
       <td>{{public_photos.count}} Public <span>|</span> {{shared_photos.count}} Shared <span>|</span> {{private_photos.count}} Private</td>
     </tr>
   </table>
+
+  <a href="{% url "profile_edit" %}">Edit Profile</a>
 </section>
 {% endblock %}

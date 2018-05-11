@@ -4,7 +4,7 @@ from django.http import Http404
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic import CreateView, UpdateView
-from .forms import AlbumForm, PhotoForm, AlbumEditForm
+from .forms import AlbumForm, PhotoForm, AlbumEditForm, PhotoEditForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
@@ -73,10 +73,11 @@ class AlbumGalleryView(ListView):
         return Album.objects.filter(published='PUBLIC')
 
 
-class LibraryView(ListView):
+class LibraryView(LoginRequiredMixin, ListView):
     template_name = 'imager_images/library.html'
     model = Album
     context_object_name = 'albums'
+    login_url = reverse_lazy('auth_login')
 
     def get_queryset(self):
         return Album.objects.filter(user__username=self.username)
@@ -87,30 +88,16 @@ class LibraryView(ListView):
         return context
 
     def get(self, *args, **kwargs):
-        if not self.request.user.is_authenticated:
-            return redirect('auth_login')
-
         self.username = self.request.user.get_username()
         return super().get(*args, **kwargs)
 
 
-class LibraryAddView(CreateView):
+class LibraryAddView(LoginRequiredMixin, CreateView):
     """
     This creates a view that PhotoAddView and AlbumAddView inherit from.
     """
     success_url = '../library'
-
-    def get(self, *args, **kwargs):
-        if not self.request.user.is_authenticated:
-            return redirect('auth_login')
-    
-        return super().get(*args, **kwargs)
-
-    def post(self, *args, **kwargs):
-        if not self.request.user.is_authenticated:
-            return redirect('auth_login')
-    
-        return super().post(*args, **kwargs)
+    login_url = reverse_lazy('auth_login')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -133,20 +120,27 @@ class AlbumEditView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('library')
     pk_url_kwarg = 'album_id'
 
-    # def get(self, *args, **kwargs):
-        # album_id = self.kwargs['album_id']
-        
-
-    # def post(self, *args, **kwargs):
-    #     pass
-
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['username'] = self.request.user.get_username()
         return kwargs
 
-    # def form_valid(self, form):
-    #     pass
+
+class PhotoEditView(LoginRequiredMixin, UpdateView):
+    """
+    This creates a veiw that allows users to edit albums
+    """
+    template_name = 'imager_images/photo_edit.html'
+    model = Photo
+    form_class = PhotoEditForm
+    login_url = reverse_lazy('auth_login')
+    success_url = reverse_lazy('library')
+    pk_url_kwarg = 'photo_id'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['username'] = self.request.user.get_username()
+        return kwargs
 
 
 class PhotoAddView(LibraryAddView):
@@ -164,7 +158,4 @@ class AlbumAddView(LibraryAddView):
     """
     template_name = 'imager_images/album_add.html'
     model = Album
-    form_class = AlbumForm   
-    
-
-
+    form_class = AlbumForm

@@ -25,17 +25,17 @@ class AlbumEditForm(AlbumForm):
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        album_id = kwargs['album_id']
-        self.fields['title'].initial = Album.objects.get(id=album_id).title
-        self.fields['description'].initial = Album.objects.get(id=album_id).description
-        self.fields['date_published'].initial = Album.objects.get(id=album_id).date_published
-        self.fields['published'].initial = Album.objects.get(id=album_id).published
-    
+        album = kwargs['instance']
+        self.fields['title'].initial = album.title
+        self.fields['description'].initial = album.description
+        self.fields['date_published'].initial = album.date_published
+        self.fields['published'].initial = album.published
+
 
 class PhotoForm(ModelForm):
     """
     Form class for user creating an photo.
-    """  
+    """
     class Meta:
         model = Photo
         fields = [
@@ -48,3 +48,19 @@ class PhotoForm(ModelForm):
         self.fields['image'] = ImageField()
 
 
+class PhotoEditForm(ModelForm):
+    """
+    Form class for editing existing photo.
+    """
+    class Meta:
+        model = Photo
+        fields = ['title', 'description', 'date_published', 'published']
+
+    def __init__(self, *args, **kwargs):
+        kwargs.pop('username')
+        super().__init__(*args, **kwargs)
+        photo = kwargs['instance']
+        self.fields['title'].initial = photo.title
+        self.fields['description'].initial = photo.description
+        self.fields['date_published'].initial = photo.date_published
+        self.fields['published'].initial = photo.published
