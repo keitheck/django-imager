@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.utils import timezone
 from sorl.thumbnail import ImageField
 
 
@@ -50,3 +52,17 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.title
+
+
+@receiver(models.signals.post_save, sender=Photo)
+def set_photo_published_date(sender, instance, **kwargs):
+    if instance.published == 'PUBLIC' and not instance.date_published:
+        instance.date_published = timezone.now()
+        instance.save()
+
+
+@receiver(models.signals.post_save, sender=Album)
+def set_album_published_date(sender, instance, **kwargs):
+    if instance.published == 'PUBLIC' and not instance.date_published:
+        instance.date_published = timezone.now()
+        instance.save()
