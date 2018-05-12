@@ -1,0 +1,24 @@
+.registration-form, .login-form {
+    margin: 0 auto;
+    text-align: center;
+}
+  
+.registration-form input, .login-form input {
+    display: block;
+    margin: 20px auto;
+}
+  
+.registration-form ul {
+    display: none;
+}
+  
+.registration-form h2, .login-form h2 {
+    margin: 50px;
+    font-family: 'Monoton';
+    font-size: 36px;
+    color: #8F0109;
+}
+
+.helptext {
+    display: none;
+}
