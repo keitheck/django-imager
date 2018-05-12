@@ -1,36 +1,17 @@
-from django.shortcuts import redirect, get_object_or_404
-from .models import Album, Photo
-from django.http import Http404
-from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
-from django.views.generic import CreateView, UpdateView
-from .forms import AlbumForm, PhotoForm, AlbumEditForm, PhotoEditForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from .models import Album, Photo
+from .forms import AlbumForm, PhotoForm, AlbumEditForm, PhotoEditForm
 
 
 class PhotoView(DetailView):
     template_name = 'imager_images/photo.html'
     model = Photo
     pk_url_kwarg = 'photo_id'
-
-    def get(self, *args, **kwargs):
-        try:
-            self.photo = get_object_or_404(Photo, id=kwargs['photo_id'])
-        except KeyError:
-            raise Http404
-        self.username = self.request.user.get_username()
-
-        if self.photo.user.username != \
-                self.username and self.photo.published != 'PUBLIC':
-            raise Http404('Photo not found.')
-
-        return super().get(*args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['photo'] = self.photo
-        return context
+    context_object_name = 'photo'
 
 
 class PhotoGalleryView(ListView):
@@ -45,24 +26,7 @@ class AlbumView(DetailView):
     template_name = 'imager_images/album.html'
     model = Album
     pk_url_kwarg = 'album_id'
-
-    def get(self, *args, **kwargs):
-        try:
-            self.album = get_object_or_404(Album, id=kwargs['album_id'])
-        except KeyError:
-            raise Http404
-        self.username = self.request.user.get_username()
-
-        if self.album.user.username != \
-                self.username and self.album.published != 'PUBLIC':
-            raise Http404('Album not found.')
-
-        return super().get(*args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['album'] = self.album
-        return context
+    context_object_name = 'album'
 
 
 class AlbumGalleryView(ListView):
