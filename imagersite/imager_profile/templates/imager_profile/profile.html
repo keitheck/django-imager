@@ -6,32 +6,32 @@
   <table class="tbl-user-profile">
     <tr>
       <td>Location:</td>
-      {% if profile.user.location %}
-      <td>{{profile.user.location}}</td>
+      {% if profile.location %}
+      <td>{{profile.location}}</td>
       {% else %}
       <td>N/A</td>
       {% endif %}
     </tr>
     <tr>
       <td>Website:</td>
-      {% if profile.user.website %}
-      <td>{{profile.user.website}}</td>
+      {% if profile.website %}
+      <td>{{profile.website}}</td>
       {% else %}
       <td>N/A</td>
       {% endif %}
     </tr>
     <tr>
       <td>Camera:</td>
-      {% if profile.user.camera %}
-      <td>{{profile.user.camera}}</td>
+      {% if profile.camera %}
+      <td>{{profile.camera}}</td>
       {% else %}
       <td>N/A</td>
       {% endif %}
     </tr>
     <tr>
       <td>Bio:</td>
-      {% if profile.user.bio %}
-      <td>{{profile.user.bio}}</td>
+      {% if profile.bio %}
+      <td>{{profile.bio}}</td>
       {% else %}
       <td>N/A</td>
       {% endif %}
@@ -45,7 +45,8 @@
       <td>{{public_photos.count}} Public <span>|</span> {{shared_photos.count}} Shared <span>|</span> {{private_photos.count}} Private</td>
     </tr>
   </table>
-
+  {% if profile.user.username == username %}
   <a href="{% url "profile_edit" %}">Edit Profile</a>
+  {% endif %}
 </section>
 {% endblock %}
