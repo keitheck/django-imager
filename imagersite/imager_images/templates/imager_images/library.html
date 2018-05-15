@@ -4,7 +4,9 @@
 {% block content %}
 <p>Your Albums:</p>
 {% for album in albums.all %}
-<a href="{% url "album" album_id=album.id %}"></a><p>{{album.title}}<p></a>
+<a href="{% url "album" album_id=album.id %}">
+  <p>{{album.title}}<p>
+</a>
 <p>{{album.description}}</p>
 <p>{{album.date_created}}</p>
 <a href="/images/albums/{{album.id}}/edit">

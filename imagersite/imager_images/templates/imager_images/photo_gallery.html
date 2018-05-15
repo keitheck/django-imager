@@ -3,9 +3,11 @@
 
 {% block content %}
 {% for image in gallery.all %}
-<p>{{image.title}}</p>
-{% thumbnail image.image "100x100" crop="center" as im %}
-<a href="{% url "photo" photo_id=image.id %}"><img src="{{im.url}}"></a>
-{% endthumbnail %}
+<a href="{% url "photo" photo_id=image.id %}">
+  <p>{{image.title}}</p>
+  {% thumbnail image.image "100x100" crop="center" as im %}
+  <img src="{{im.url}}"></a>
+  {% endthumbnail %}
+</a>
 {% endfor %}
 {% endblock %}

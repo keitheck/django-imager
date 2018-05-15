@@ -2,7 +2,6 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.test import TestCase, RequestFactory
 from django.urls import reverse, reverse_lazy
 from django.http import Http404
-from django.shortcuts import render
 from ..views import (
     LibraryView,
     PhotoView,
@@ -10,7 +9,10 @@ from ..views import (
     AlbumAddView,
     PhotoAddView,
     PhotoGalleryView,
-    AlbumGalleryView)
+    AlbumGalleryView,
+    PhotoEditView,
+    AlbumEditView,
+    )
 from ..models import Album, Photo
 from model_mommy import mommy
 import tempfile
@@ -213,7 +215,66 @@ class ViewTests(TestCase):
         response = LibraryView.as_view()(request)
         self.assertContains(response, album.title)
 
-   # def test_photo_add_adds(self):
-   #     request = RequestFactory().post(reverse('photo_add'), {'image': tempfile.NamedTemporaryFile(suffix='.jpg').name, 'title': 'Untitled', 'description': 'Description', 'published': 'PUBLIC'})
-   #     response = LibraryView.as_view()(request)
-   #     self.assertEqual(response.status_code, 302)
+    def test_photo_edit_exists(self):
+        """Validate photo edit view renders for owner of photo."""
+        user = User.objects.first()
+        photo = Photo.objects.filter(user=user).first()
+        request = RequestFactory().get(reverse('photo_edit', args=[photo.id]))
+        request.user = user
+        response = PhotoEditView.as_view()(request, photo_id=photo.id)
+        self.assertEqual(response.status_code, 200)
+
+    def test_photo_edit_prepopulates(self):
+        """Validate that the current photo data displays in the form."""
+        user = User.objects.first()
+        photo = Photo.objects.filter(user=user).first()
+        photo.title = 'I am a photo title.'
+        photo.description = 'I am a photo description.'
+        photo.save()
+        request = RequestFactory().get(reverse('photo_edit', args=[photo.id]))
+        request.user = user
+        response = PhotoEditView.as_view()(request, photo_id=photo.id)
+        self.assertContains(response, photo.title)
+        self.assertContains(response, photo.description)
+        self.assertContains(response, photo.published)
+
+    def test_photo_edit_404_if_not_owner(self):
+        """Validate that non-owner cannot access edit view."""
+        user = User.objects.first()
+        photo = Photo.objects.exclude(user=user).first()
+        request = RequestFactory().get(reverse('photo_edit', args=[photo.id]))
+        request.user = user
+        with self.assertRaises(Http404):
+            PhotoEditView.as_view()(request, photo_id=photo.id)
+
+    def test_album_edit_exists(self):
+        """Validate album edit view renders for owner of album."""
+        user = User.objects.first()
+        album = Album.objects.filter(user=user).first()
+        request = RequestFactory().get(reverse('album_edit', args=[album.id]))
+        request.user = user
+        response = AlbumEditView.as_view()(request, album_id=album.id)
+        self.assertEqual(response.status_code, 200)
+
+    def test_album_edit_prepopulates(self):
+        """Validate that the current album data displays in the form."""
+        user = User.objects.first()
+        album = Album.objects.filter(user=user).first()
+        album.title = 'I am a album title.'
+        album.description = 'I am a album description.'
+        album.save()
+        request = RequestFactory().get(reverse('album_edit', args=[album.id]))
+        request.user = user
+        response = AlbumEditView.as_view()(request, album_id=album.id)
+        self.assertContains(response, album.title)
+        self.assertContains(response, album.description)
+        self.assertContains(response, album.published)
+
+    def test_album_edit_404_if_not_owner(self):
+        """Validate that non-owner can't access edit view."""
+        user = User.objects.first()
+        album = Album.objects.exclude(user=user).first()
+        request = RequestFactory().get(reverse('album_edit', args=[album.id]))
+        request.user = user
+        with self.assertRaises(Http404):
+            AlbumEditView.as_view()(request, album_id=album.id)
