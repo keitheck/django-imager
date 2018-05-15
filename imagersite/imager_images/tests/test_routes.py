@@ -168,3 +168,76 @@ class RouteTests(TestCase):
         response = self.client.get(reverse('photo_add'))
         self.assertEqual(response.status_code, 302)
 
+    def test_photo_edit_edits(self):
+        """Validate that photo edit view edits instance."""
+        user = User.objects.first()
+        photo = Photo.objects.first()
+        photo.user = user
+        photo.title = 'this is my original title.'
+        photo.save()
+        self.client.force_login(user)
+        self.client.post(
+            reverse('photo_edit', args=[photo.id]),
+            {
+                'title': 'this is my new title',
+                'description': 'this is my new description.',
+                'published': 'PUBLIC',
+            })
+        self.client.logout()
+        photo = Photo.objects.get(id=photo.id)
+        self.assertEqual(photo.title, 'this is my new title')
+
+    def test_photo_edit_redirects_after_edit(self):
+        """Validate redirect to library after edit."""
+        user = User.objects.first()
+        photo = Photo.objects.first()
+        photo.user = user
+        photo.save()
+        self.client.force_login(user)
+        response = self.client.post(
+            reverse('photo_edit', args=[photo.id]),
+            {
+                'title': 'this is my new title',
+                'description': 'this is my new description.',
+                'published': 'PUBLIC',
+            },
+            follow=True)
+        self.client.logout()
+        self.assertTemplateUsed(response, 'imager_images/library.html')
+
+    def test_album_edit_edits(self):
+        """Validate that album edit view edits instance."""
+        user = User.objects.first()
+        album = Album.objects.first()
+        album.user = user
+        album.title = 'this is my original title.'
+        album.save()
+        self.client.force_login(user)
+        self.client.post(
+            reverse('album_edit', args=[album.id]),
+            {
+                'title': 'this is my new title',
+                'description': 'this is my new desc',
+                'published': 'PUBLIC',
+            })
+        self.client.logout()
+        album = Album.objects.get(id=album.id)
+        self.assertEqual(album.title, 'this is my new title')
+
+    def test_album_edit_redirects_after_edit(self):
+        """Validate redirect to library after edit."""
+        user = User.objects.first()
+        album = Album.objects.first()
+        album.user = user
+        album.save()
+        self.client.force_login(user)
+        response = self.client.post(
+            reverse('album_edit', args=[album.id]),
+            {
+                'title': 'this is my new title',
+                'description': 'this is my new description.',
+                'published': 'PUBLIC',
+            },
+            follow=True)
+        self.client.logout()
+        self.assertTemplateUsed(response, 'imager_images/library.html')

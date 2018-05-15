@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
+from django.shortcuts import get_list_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from .models import Album, Photo
@@ -102,10 +103,8 @@ class PhotoEditView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('library')
     pk_url_kwarg = 'photo_id'
 
-    def get(self, *args, **kwargs):
-        if self.request.user.username != self.get_object().user.username:
-            raise Http404
-        return super().get(*args, **kwargs)
+    def get_queryset(self):
+        return Photo.objects.filter(user__username=self.request.user.username)
 
 
 class AlbumEditView(LoginRequiredMixin, UpdateView):
@@ -119,7 +118,5 @@ class AlbumEditView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('library')
     pk_url_kwarg = 'album_id'
 
-    def get(self, *args, **kwargs):
-        if self.request.user.username != self.get_object().user.username:
-            raise Http404
-        return super().get(*args, **kwargs)
+    def get_queryset(self):
+        return Album.objects.filter(user__username=self.request.user.username)

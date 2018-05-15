@@ -4,10 +4,12 @@
 {% block content %}
 {% for album in gallery.all %}
 <div class="gallery-album-div">
-  <p class="alb-title">{{album.title}}</p>
-  {% thumbnail album.cover.image "100x100" crop="center" as im %}
-  <a href="{% url "album" album_id=album.id %}"><img src="{{ im.url }}" class="album-thumb"></a>
-  {% endthumbnail %}
+  <a href="{% url "album" album_id=album.id %}">
+    <p class="alb-title">{{album.title}}</p>
+    {% thumbnail album.cover.image "100x100" crop="center" as im %}
+    <img src="{{ im.url }}" class="album-thumb"></a>
+    {% endthumbnail %}
+  </a>
 </div>
 {% endfor %}
 {% endblock %}
