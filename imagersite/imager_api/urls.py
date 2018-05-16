@@ -3,5 +3,5 @@ from .views import PhotoListAPIView
 
 
 urlpatterns = [
-        path('photos', PhotoListAPIView.as_view(), 'photo_list_api')
+        path('photos', PhotoListAPIView.as_view(), name='photo_list_api')
 ]
