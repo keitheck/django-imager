@@ -189,11 +189,13 @@ footer {
 
 .photo-view {
   width: 100%;
-  transition-duration: 230ms; }
+  transition-duration: 3000ms;
+  border-radius: 10px;
+  border: #969696 solid 5px; }
 
 .photo-view:hover {
-  width: 120%;
-  margin-left: -90px; }
+  border-radius: none;
+  border: #ececec solid 5px; }
 
 .user-profile {
   text-align: center;
@@ -254,6 +256,8 @@ footer {
 
 .side-nav {
   background-color: rgba(224, 63, 198, 0.4);
+  border-radius: none;
+  border: transparent solid 5px;
   padding: 20px;
   width: 174px;
   position: absolute;
@@ -264,7 +268,10 @@ footer {
   border-bottom-right-radius: 10px; }
 
 .side-nav:hover {
-  left: 0; }
+  left: 0;
+  border: rgba(88, 19, 77, 0.4) solid 5px; }
+  .side-nav:hover .menu-icon {
+    transform: rotate(0deg); }
 
 .side-nav-container {
   position: relative; }

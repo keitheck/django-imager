@@ -1,0 +1,15 @@
+.photo-view-div {
+    width: 100%;
+  }
+  
+  .photo-view {
+    width: 100%;
+    transition-duration: 5000ms;
+    border-radius: 10px;
+    border: $lt-grey solid 5px;
+  }
+  
+  .photo-view:hover {
+    border-radius: none;
+    border: rgb(255, 255, 255) solid 5px;
+  }

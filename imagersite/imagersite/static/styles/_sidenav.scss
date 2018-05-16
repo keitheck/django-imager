@@ -1,5 +1,7 @@
 .side-nav {
     background-color: rgba(224, 63, 198, 0.4);
+    border-radius: none;
+    border: transparent solid 5px;
     padding: 20px;
     width: 174px;
     position: absolute;
@@ -12,6 +14,11 @@
 
 .side-nav:hover {
     left: 0;
+    border: rgba(88, 19, 77, 0.4) solid 5px;
+
+    .menu-icon {
+        transform: rotate(0deg);
+    }
 }
 
 .side-nav-container {
