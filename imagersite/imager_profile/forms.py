@@ -16,13 +16,13 @@ class ProfileEditForm(ModelForm):
             'services',
             'photostyles']
 
-    def __init__(self, *args, **kwargs):
+        def __init__(self, *args, **kwargs)::
         username = kwargs.pop('username')
         super().__init__(*args, **kwargs)
         user = ImagerProfile.objects.get(user__username=username)
         self.fields['bio'].initial = user.bio
         self.fields['phone'].initial = user.phone
-        self.fields['location'].initial = user.bio
+        self.fields['location'].initial = user.location
         self.fields['website'].initial = user.bio
         self.fields['fee'].initial = user.phone
         self.fields['camera'].initial = user.phone

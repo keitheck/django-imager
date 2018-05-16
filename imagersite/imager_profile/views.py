@@ -1,10 +1,10 @@
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, UpdateView
 from imager_images.models import Photo, Album
 from .models import ImagerProfile
-from .forms import ProfileEditForm
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -35,23 +35,15 @@ class ProfileView(LoginRequiredMixin, DetailView):
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
+    """View for updating user profile."""
     template_name = 'imager_profile/profile_edit.html'
     model = ImagerProfile
-    form_class = ProfileEditForm
     login_url = reverse_lazy('auth_login')
     success_url = reverse_lazy('profile')
     slug_url_kwarg = 'username'
     slug_field = 'user__username'
+    fields = ['bio', 'phone', 'location', 'website', 'fee', 'camera',
+              'services', 'photostyles']
 
-    def get(self, *args, **kwargs):
-        self.kwargs['username'] = self.request.user.get_username()
-        return super().get(*args, **kwargs)
-
-    def post(self, *args, **kwargs):
-        self.kwargs['username'] = self.request.user.get_username()
-        return super().post(*args, **kwargs)
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs.update({'username': self.request.user.get_username()})
-        return kwargs
+    def get_object(self):
+        return get_object_or_404(ImagerProfile, user=self.request.user)
