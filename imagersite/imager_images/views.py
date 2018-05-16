@@ -7,6 +7,7 @@ from .models import Album, Photo
 
 
 class PhotoView(DetailView):
+    """View for an individual photo."""
     template_name = 'imager_images/photo.html'
     context_object_name = 'photo'
     pk_url_kwarg = 'photo_id'
@@ -18,6 +19,7 @@ class PhotoView(DetailView):
 
 
 class AlbumView(DetailView):
+    """View for an individual album."""
     template_name = 'imager_images/album.html'
     context_object_name = 'album'
     pk_url_kwarg = 'album_id'
@@ -29,6 +31,7 @@ class AlbumView(DetailView):
 
 
 class PhotoGalleryView(ListView):
+    """View for all public photos, site-wide."""
     template_name = 'imager_images/photo_gallery.html'
     context_object_name = 'gallery'
 
@@ -37,6 +40,7 @@ class PhotoGalleryView(ListView):
 
 
 class AlbumGalleryView(ListView):
+    """View for all public albums, side-wide."""
     template_name = 'imager_images/album_gallery.html'
     context_object_name = 'gallery'
 
@@ -45,6 +49,7 @@ class AlbumGalleryView(ListView):
 
 
 class LibraryView(LoginRequiredMixin, ListView):
+    """View of personal library - user-owned photos and albums."""
     template_name = 'imager_images/library.html'
     context_object_name = 'albums'
     login_url = reverse_lazy('auth_login')
@@ -91,6 +96,12 @@ class AlbumAddView(LibraryAddView):
     model = Album
     fields = ['title', 'cover', 'photos', 'description', 'published']
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['photos'].queryset = form.fields['cover'].queryset = \
+            Photo.objects.filter(user=self.request.user)
+        return form
+
 
 class PhotoEditView(LoginRequiredMixin, UpdateView):
     """
@@ -120,3 +131,9 @@ class AlbumEditView(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         return Album.objects.filter(user__username=self.request.user.username)
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['photos'].queryset = form.fields['cover'].queryset = \
+            Photo.objects.filter(user=self.request.user)
+        return form

@@ -51,6 +51,10 @@ export DB_HOST='localhost'
 
 - user profile page
 
+### /profile/edit
+
+- update user profile page
+
 ### /accounts/
 
 - user authentication and registration
@@ -107,7 +111,8 @@ export DB_HOST='localhost'
 | 08 May 2018 | Added the ability to add albums and photos |
 | 09 May 2018 | Additional styling added |
 | 10 May 2018 | Added the ability to edit albums, photos, and profiles. |
-| 10 May 2018 | Added the photos api endpoint |
+| 15 May 2018 | Added the photos api endpoint |
+| 15 May 2018 | Updated and improved profile edit view."
 
 ## Resources
 - Django
