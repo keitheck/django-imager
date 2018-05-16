@@ -26,6 +26,9 @@ urlpatterns = [
     path('profile/', include('imager_profile.urls')),
     path('accounts/', include('registration.backends.hmac.urls')),
     path('images/', include('imager_images.urls')),
-] 
+    path('api/v1/', include('imager_api.urls')),
+]
+
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

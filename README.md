@@ -83,6 +83,19 @@ export DB_HOST='localhost'
 
 - Upload albums
 
+### /images/photos/<photo_id>/edit
+
+- Edit a photo
+
+### /images/albums/<album_id>/edit
+
+- Edit an album
+
+### /api/v1/photos
+
+- Access the photos of the logged-in user
+
+
 ## Change Log
 | Date | |
 |:--|:--|
@@ -92,8 +105,9 @@ export DB_HOST='localhost'
 | 26 April 2018 | Added library, photo and album routes. Tested |
 | 30 April 2018 | Travis CI, testing extended |
 | 08 May 2018 | Added the ability to add albums and photos |
-| 09 May 2018 | Additional styling added
-| 10 May 2018 | Added the ability to edit albums, photos, and profiles.
+| 09 May 2018 | Additional styling added |
+| 10 May 2018 | Added the ability to edit albums, photos, and profiles. |
+| 10 May 2018 | Added the photos api endpoint |
 
 ## Resources
 - Django
