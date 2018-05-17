@@ -4,28 +4,36 @@
 {% block content %}
 <p>Your Albums:</p>
 {% for album in albums.all %}
-<a href="{% url "album" album_id=album.id %}">
-  <p>{{album.title}}<p>
-</a>
-<p>{{album.description}}</p>
-<p>{{album.date_created}}</p>
-<a href="/images/albums/{{album.id}}/edit">
-  <button class="edit">Edit Album</button>
-</a>
+<div class="alb-contain-gallery">
+    <div class="alb-contain-inner">
+      <a href="{% url "album" album_id=album.id %}">
+        <p>{{album.title}}<p>
+      </a>
+      <p>{{album.description}}</p>
+      <p>{{album.date_created}}</p>
+      <a href="/images/albums/{{album.id}}/edit">
+        <button class="edit">Edit Album</button>
+      </a>
+    </div>
+  </div>  
 {% endfor %}
 
 <p>Your Photos:</p>
 {% for image in photos.all %}
-{% thumbnail image.image "100x100" crop="center" as im %}
-<a href="{% url "photo" photo_id=image.id %}"><img src="{{ im.url }}"></a>
-{% endthumbnail %}
-<a href="/images/photos/{{image.id}}/edit">
-<button class="edit">Edit Photo</button>
-</a>
+<div class="alb-contain-gallery">
+  <div class="alb-contain-inner">
+  {% thumbnail image.image "100x100" crop="center" as im %}
+    <a href="{% url "photo" photo_id=image.id %}"><img src="{{ im.url }}" class="album-thumb"></a>
+    {% endthumbnail %}
+    <a href="/images/photos/{{image.id}}/edit">
+    <button class="edit">Edit Photo</button>
+    </a>
+  </div>
+</div>  
 {% endfor %}
 
-<a href="/images/photos/add">Add a photo</a>
-<a href="/images/albums/add">Add an album</a>
+{% comment %} <a href="/images/photos/add">Add a photo</a>
+<a href="/images/albums/add">Add an album</a> {% endcomment %}
 
 {% endblock %}
 
