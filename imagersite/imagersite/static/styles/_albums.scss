@@ -36,3 +36,35 @@
     width: 90%;
     margin: 10px auto;
 }
+
+.alb-title {
+
+}
+
+.gallery-wrapper {
+    margin: 20px auto;
+    position: relative;
+}
+
+.alb-contain-gallery {
+    border: $lt-grey solid 10px;
+    background-color: rgba(0,0,0,.3);
+    // position: relative;
+    border-radius: 10px;
+    width: 20%;
+    margin: 0px 10px 10px 0px;
+    display: inline-block;
+
+    img {
+        width: 131px;
+    }
+
+    a {
+        font-family: $main-font;
+        letter-spacing: auto;
+        font-size: auto;
+        line-height: auto;
+        text-shadow: $shadow-color;
+        color: $white;
+    }
+}

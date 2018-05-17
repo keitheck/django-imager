@@ -1,3 +1,6 @@
+// * {
+//   outline: rgba(255, 25, 25, 0.342) dotted 1px
+// }
 
 p, a {
   font-family: 'Montserrat';
@@ -37,4 +40,18 @@ h4 {
   font-size: 1.1em;
   line-height: 1.2em;
   text-shadow: $shadow-color;
+}
+
+button {
+  padding: 5px;
+  background-color: $action;
+  border-width: 2px;
+  border-radius: 3px;
+  border-color: $lt-grey;
+  transition: 350ms;
+  color: $white;
+}
+
+button:hover {
+  border-color: $white;
 }

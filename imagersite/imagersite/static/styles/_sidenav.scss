@@ -1,7 +1,9 @@
 .side-nav {
-    background-color: rgba(224, 63, 198, 0.4);
+    background-color: $action;
     border-radius: none;
-    border: transparent solid 5px;
+    border-top: $lt-grey solid 5px;
+    border-right: $lt-grey solid 5px;
+    border-bottom: $lt-grey solid 5px;
     padding: 20px;
     width: 174px;
     position: absolute;
@@ -10,15 +12,53 @@
     transition: 350ms;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+
+    li {
+        list-style-type: none;
+        margin: 10px 0px
+    }
+
+    a {
+        text-decoration: none;
+        color: rgb(224, 224, 224);
+        margin: 10px 10px
+    }
+
+}
+
+h4 {
+    font-family: $main-font;
+    letter-spacing: auto;
+    font-size: auto;
+    line-height: auto;
+    text-shadow: $shadow-color;
+    color: $white;
+    margin: 10px 0px 10px 0px
 }
 
 .side-nav:hover {
     left: 0;
-    border: rgba(88, 19, 77, 0.4) solid 5px;
+    border-top: rgba(255, 255, 255, 0.4) solid 5px;
+    border-right: rgba(255, 255, 255, 0.4) solid 5px;
+    border-bottom: rgba(255, 255, 255, 0.4) solid 5px;
+    transition: 1300ms;
+    color: $white;
 
     .menu-icon {
+        transition: 1300ms;
         transform: rotate(0deg);
     }
+
+    h4 {
+        font-family: $main-font;
+        letter-spacing: auto;
+        font-size: auto;
+        line-height: auto;
+        text-shadow: $shadow-color;
+        color: $white;
+        margin: 10px 0px 10px 0px
+    }
+
 }
 
 .side-nav-container {
@@ -31,13 +71,6 @@
     top: 0;
     left: 160px;
     transform: rotate(90deg);
-    // transform-origin: left top 0;
+    color: $white;
     
-    h5 {
-        font-family: $main-font;
-        letter-spacing: auto;
-        font-size: auto;
-        line-height: auto;
-        text-shadow: $shadow-color;
-    }
 }

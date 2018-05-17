@@ -15,6 +15,7 @@
   <header>
     <nav>
       <ul>
+        <li><a href="{% url "home" %}">Home</a></li>
         {% if user.is_authenticated %}
         <li><a href="{% url "library" %}">Library</a></li>
         <li><a href="{% url "album_gallery" %}">Explore</a></li>
@@ -32,9 +33,9 @@
     <div class="side-nav">
         <div class="side-nav-container">
           <div class="menu-icon"><h4>|||</h4></div>
-          <h4 class="profile">My Profile:</h4>
+          <h4 class="profile">My Profile</h4>
           <li><a href="{% url "profile" %}">{{user.username}}</a></li>
-          <h4 class="create">Create:</h4>
+          <h4 class="create">Create</h4>
           <li><a href="{% url "album_add" %}">New Album</a></li>
           <li><a href="{% url "photo_add" %}">New Photo</a></li>
         </div>
