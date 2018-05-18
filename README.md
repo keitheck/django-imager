@@ -113,6 +113,7 @@ export DB_HOST='localhost'
 | 10 May 2018 | Added the ability to edit albums, photos, and profiles. |
 | 15 May 2018 | Added the photos api endpoint |
 | 15 May 2018 | Updated and improved profile edit view."
+| 17 May 2018 | Added user api endpoint
 
 ## Resources
 - Django

@@ -7,6 +7,7 @@ from imager_images.models import Photo
 
 
 class PhotoListAPIView(generics.ListAPIView):
+    """API Endpoint to view user photos."""
     permission_classes = (IsAuthenticated,)
     authentication_classes = (TokenAuthentication,)
     serializer_class = PhotoSerializer
@@ -16,6 +17,7 @@ class PhotoListAPIView(generics.ListAPIView):
 
 
 class UserAPIView(generics.RetrieveAPIView, generics.CreateAPIView):
+    """API endpoint to get user metadata or create a user."""
     permission_classes = ''
     authentication_classes = (TokenAuthentication,)
     serializer_class = UserSerializer
